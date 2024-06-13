@@ -1789,6 +1789,17 @@ class InventoryItemFilterSet(DeviceComponentFilterSet, NetBoxModelFilterSet):
     serial = MultiValueCharFilter(
         lookup_expr='iexact'
     )
+    device_role_id = django_filters.ModelMultipleChoiceFilter(
+        field_name='device__role',
+        queryset=DeviceRole.objects.all(),
+        label=_('Device role (ID)'),
+    )
+    device_role = django_filters.ModelMultipleChoiceFilter(
+        field_name='device__role__slug',
+        queryset=DeviceRole.objects.all(),
+        to_field_name='slug',
+        label=_('Device role (slug)'),
+    )
 
     class Meta:
         model = InventoryItem
